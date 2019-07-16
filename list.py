@@ -19,10 +19,11 @@ class Course:
 
     def addCourse(self):
         self.name = str(input("Enter course name: "))
+        course_list.append(self.name)
         self.unit = int(input("Enter class units: "))
-        term = (input("Enter the term for this class: "))
-        course1 = Course(self.name, self.term, self.unit)
-        return course_list.append(course1)
+        course_list.append(self.unit)
+        self.term = (input("Enter the term for this class: "))
+        course_list.append(self.term)
 
     def removeCourse(self):
         remove = input("Enter that course that you would like to remove: ")
@@ -37,7 +38,10 @@ class Course:
         print("Course", end="     ")
         print("Unit", end="     ")
         print("Term")
-        return self.name + str(self.unit) + str(self.term)
+        for x in range(len(course_list)):
+            print(course_list[x])
+
+        #return str(self.name) + str(self.unit) + str(self.term)
 
 
 def insertionSort(lst):
