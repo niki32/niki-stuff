@@ -1,4 +1,4 @@
- import os.path
+import os.path
 if os.path.exists('Course List (4)/Courses1.txt'):
     print("Courses1.txt exists")
 else:
@@ -22,13 +22,15 @@ class Course:
     def addCourse(self, course_dict):
         global name, unit, term
         name = str(input("Enter course name: "))
-        course_dict[name] = self.name
 
         unit = str(input("Enter course units: "))
-        course_dict[unit] = self.unit
 
         term = str(input("Enter course term: "))
-        course_dict[term] = self.term
+        c = Course(self.name, self.unit, self.term)
+
+        course_dict[name] = c
+
+
 
 
     def removeCourse(self, course_dict):
@@ -56,13 +58,12 @@ class Course:
             print("No courses exist.")
 
         else:
-            for key in course_dict:
-                value = course_dict[key]
-                print(key)
+            for x in course_dict:
+                x = course_dict[key]
+                print(x)
+
     def sortKeys(self, course_dict):
-        for key in sorted(course_dict.keys()):
-            print(key, course_dict[key])
-# this is where i need help so basically im trying to sort and print the course based on their keys which are the names of the courses
+        print(sorted(course_dict.keys()))
 
 def menu():
     print(" ")
