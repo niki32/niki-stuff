@@ -1,102 +1,113 @@
-course_list = []
-class Course:
+ import os.path
+if os.path.exists('Course List (4)/Courses1.txt'):
+    print("Courses1.txt exists")
+else:
+    print("Courses1.txt does not exist.")
 
-    def __init__(self, name, term, unit):
+course_dict = {}
+class Course:
+    def __init__(self, name, unit, term):
         self.name = name
-        self.term = term
+
         self.unit = unit
 
+        self.term = term
+
+    def __str__(self):
+        return "name: " + self.name + " unit: " + str(self.unit) + "term: " + str(self.term)
 
     def __lt__(self, other):
         return self.unit < other.unit
 
-    def search(course_name, lst):
-        for i in range(0, len(lst)):
-            if course_name == lst[i].name:
-                return i
+    def addCourse(self, course_dict):
+        global name, unit, term
+        name = str(input("Enter course name: "))
+        course_dict[name] = self.name
 
-        return -1
+        unit = str(input("Enter course units: "))
+        course_dict[unit] = self.unit
 
-    def addCourse(self):
-        self.name = str(input("Enter course name: "))
-        course_list.append(self.name)
-        self.unit = int(input("Enter class units: "))
-        course_list.append(self.unit)
-        self.term = (input("Enter the term for this class: "))
-        course_list.append(self.term)
+        term = str(input("Enter course term: "))
+        course_dict[term] = self.term
 
-    def removeCourse(self):
-        remove = input("Enter that course that you would like to remove: ")
-        index = search(remove, course_list)
-        if index > -1:
-            print("found, index = ", index)
-            # change(course_list[index], "New name")
+
+    def removeCourse(self, course_dict):
+        removedname = input("Enter that course that you would like to remove: ")
+        if removedname in course_dict:
+
+            removedunit = input("Enter the units that you would like to remove: ")
+
+            removedterm = input("Enter the term that you would like to remove: ")
+
+            course_dict.pop(removedname)
+
+            course_dict.pop(removedunit)
+
+            course_dict.pop(removedterm)
         else:
-            print("Not found")
+            print("The course", removedname, "does not exist.")
 
-    def printList(self):
-        print("Course", end="     ")
-        print("Unit", end="     ")
+    def printList(self, course_dict):
+        print("Course", end="         ")
+        print("Unit", end="         ")
         print("Term")
-        for x in range(len(course_list)):
-            print(course_list[x])
 
-        #return str(self.name) + str(self.unit) + str(self.term)
+        if len(course_dict) == 0:
+            print("No courses exist.")
 
-
-def insertionSort(lst):
-    for i in range(1, len(lst)):
-            # insert lst[i] into a sorted sublist lst[0..i-1] so that
-            #   lst[0..i] is sorted.
-        currentElement = lst[i]
-        k = i - 1
-        while k >= 0 and lst[k] > currentElement:
-            lst[k + 1] = lst[k]
-            k -= 1
-
-            # Insert the current element into lst[k + 1]
-            lst[k + 1] = currentElement
-
-    def courseSort(self):
-        course_list.sort()
-        print(course_list)
-
+        else:
+            for key in course_dict:
+                value = course_dict[key]
+                print(key)
+    def sortKeys(self, course_dict):
+        for key in sorted(course_dict.keys()):
+            print(key, course_dict[key])
+# this is where i need help so basically im trying to sort and print the course based on their keys which are the names of the courses
 
 def menu():
+    print(" ")
     print("Please choose 1 of the following options:")
     print("  1. List all courses")
     print("  2. Add a course")
     print("  3. Drop a course")
     print("  4. Sort courses based on course name")
-    print("  5. Sort courses based on number of units")
-    print("  6. Exit")
+    print("  5. Exit")
     print(" ")
     return eval(input("Enter your option: "))
 
-#program starts running
+
+# program starts running
 loop = 1
 
 Course1 = Course("", "", 0)
 
 while loop == 1:
     choice = menu()
-    if choice == 1:
-        if len(course_list) == 0:
+    if choice == 1:  # option 1 is displayed
+        if len(course_dict) == 0:
             print("No classes have been inputted.")
         else:
-            Course1.printList()
-    elif choice == 2:
-        Course1.addCourse()
-    elif choice == 3:
-        Course1.removeCourse()
-    elif choice == 4:
-        insertionSort()
-    elif choice == 5:
-        print("not ready yet")
-    elif choice == 6:
+            Course1.printList(course_dict)
+
+    elif choice == 2:  # option 2 is displayed
+        Course1.addCourse(course_dict)
+
+    elif choice == 3:  # option 3 is displayed
+        Course1.removeCourse(course_dict)
+
+    elif choice == 4:  # option 4 is displayed
+        Course1.sortKeys(course_dict)
+
+    elif choice == 5:  # option 5 is displayed
         loop = 0
-        print("Thank you for using the my bank application.")  # end the application
+        print("Thank you for using the course list application!!")
+        file1 = open("Courses1.txt", "w")
+        file1.write("Course")
+        file1.close
+        # end the application
+
     elif choice <= 0:
         print("Invalid selection. Please try again.")  # error checking
-    elif choice > 6:
+
+    elif choice > 5:
         print("Invalid selection. Please try again.")  # error checking
