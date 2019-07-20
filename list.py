@@ -14,7 +14,7 @@ class Course:
         self.term = term
 
     def __str__(self):
-        return "name: " + self.name + " unit: " + str(self.unit) + "term: " + str(self.term)
+        return name + unit + term
 
     def __lt__(self, other):
         return self.unit < other.unit
@@ -58,9 +58,9 @@ class Course:
             print("No courses exist.")
 
         else:
-            for x in course_dict:
-                x = course_dict[key]
-                print(x)
+            for key in course_dict:
+                print(key + str(course_dict[key]))
+
 
     def sortKeys(self, course_dict):
         print(sorted(course_dict.keys()))
@@ -103,7 +103,9 @@ while loop == 1:
         loop = 0
         print("Thank you for using the course list application!!")
         file1 = open("Courses1.txt", "w")
-        file1.write("Course")
+        file1.write("Course", end="         ")
+        file1.write("Unit", end="         ")
+        file1.write("Term")
         file1.close
         # end the application
 
